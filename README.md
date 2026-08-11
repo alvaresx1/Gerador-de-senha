@@ -22,9 +22,7 @@ Como essa era uma tarefa repetitiva e consumia tempo, criei este gerador utiliza
 - Botão para copiar a senha gerada;
 - Interface responsiva.
 
-## 🖥️ Interface
 
-![Gerador de Senhas](./imagem-gerador.png)
 
 ## 🛠️ Tecnologias utilizadas
 
