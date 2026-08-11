@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Senha </title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #6dd5ed, #2193b0); 
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            animation: fadeIn 1s ease-out; 
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #2193b0; 
+            margin-bottom: 30px;
+            font-weight: 700; 
+            font-size: 2.2em;
+            letter-spacing: 1px; 
+        }
+
+        
+        .input-group {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            gap: 15px; 
+        }
+
+        label {
+            display: block;
+            font-size: 1.1em;
+            color: #555;
+            font-weight: 600;
+        }
+
+        input[type="number"] {
+            width: 120px; 
+            padding: 12px;
+            border: 2px solid #a8dadc; 
+            border-radius: 8px;
+            font-size: 1.1em;
+            text-align: center;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #2193b0; 
+            box-shadow: 0 0 0 3px rgba(33, 147, 176, 0.3); 
+        }
+
+        button {
+            background-color: #2193b0; 
+            color: white;
+            padding: 14px 30px; 
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(33, 147, 176, 0.4); 
+        }
+
+        button:hover {
+            background-color: #1a7b91; 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(33, 147, 176, 0.5);
+        }
+
+        button:active {
+            transform: translateY(0); 
+            box-shadow: 0 3px 10px rgba(33, 147, 176, 0.3);
+        }
+
+       
+        #senhaGeradaContainer {
+            margin-top: 30px;
+            padding: 25px;
+            border: 2px dashed #a8dadc; 
+            border-radius: 10px;
+            background-color: #e0f8fa; 
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            word-break: break-all; 
+            animation: slideIn 0.8s ease-out; 
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #senhaGeradaMessage { 
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        #senhaGeradaText { 
+            font-size: 1.6em; 
+            font-weight: 700; 
+            color: #0d6e87; 
+            letter-spacing: 0.5px;
+        }
+
+       
+        .copy-button {
+            background-color: #1a7b91; 
+            margin-top: 15px; 
+            padding: 10px 20px;
+            font-size: 1em;
+            box-shadow: 0 4px 12px rgba(26, 123, 145, 0.3);
+        }
+
+        .copy-button:hover {
+            background-color: #0e5a6b;
+            box-shadow: 0 6px 15px rgba(26, 123, 145, 0.4);
+        }
+
+        /* Responsividade Básica */
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+            label {
+                font-size: 1em;
+            }
+            input[type="number"] {
+                width: 100px;
+                padding: 10px;
+            }
+            button {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+            #senhaGeradaText {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerador de Senha AMP</h1>
+
+        <div class="input-group">
+            <label for="tamanhoSenha">Tamanho da Senha (4 a 12):</label>
+            <input type="number" id="tamanhoSenha" min="4" max="12" value="8">
+            <button onclick="gerarSenhaComRequisitos()">Gerar Senha</button>
+        </div>
+
+        <div id="senhaGeradaContainer">
+            <span id="senhaGeradaMessage"></span>
+            <span id="senhaGeradaText">Clique em "Gerar Senha"</span>
+        </div>
+        <button class="copy-button" onclick="copiarSenha()">Copiar Senha</button>
+    </div>
+
+    <script>
+        function gerarSenhaComRequisitos() {
+            const tamanho = parseInt(document.getElementById("tamanhoSenha").value);
+            const especiais = "!@#$%^&*()_+{}[]:;<>,.?/~`-="; 
+            const numeros = "0123456789";
+            const letrasMinusculas = "abcdefghijklmnopqrstuvwxyz";
+            const letrasMaiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const todosCaracteres = especiais + numeros + letrasMinusculas + letrasMaiusculas;
+            let senhaArray = [];
+
+          
+            if (tamanho >= 4) {
+                senhaArray.push(especiais.charAt(Math.floor(Math.random() * especiais.length)));
+                senhaArray.push(numeros.charAt(Math.floor(Math.random() * numeros.length)));
+                senhaArray.push(letrasMinusculas.charAt(Math.floor(Math.random() * letrasMinusculas.length)));
+                senhaArray.push(letrasMaiusculas.charAt(Math.floor(Math.random() * letrasMaiusculas.length)));
+            }
+
+            const caracteresRestantes = tamanho - senhaArray.length;
+            for (let i = 0; i < caracteresRestantes; i++) {
+                const indiceTodos = Math.floor(Math.random() * todosCaracteres.length);
+                senhaArray.push(todosCaracteres.charAt(indiceTodos));
+            }
+
+            for (let i = senhaArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [senhaArray[i], senhaArray[j]] = [senhaArray[j], senhaArray[i]];
+            }
+
+            document.getElementById("senhaGeradaMessage").textContent = "Senha Gerada:";
+            document.getElementById("senhaGeradaText").textContent = senhaArray.join('');
+        }
+
+        function copiarSenha() {
+            const senhaText = document.getElementById("senhaGeradaText").textContent;
+            if (senhaText && senhaText !== 'Clique em "Gerar Senha"') {
+                navigator.clipboard.writeText(senhaText)
+           }
+            }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            gerarSenhaComRequisitos();
+
+            if (document.getElementById("senhaGeradaText").textContent === '') {
+                document.getElementById("senhaGeradaText").textContent = 'Clique em "Gerar Senha"';
+                document.getElementById("senhaGeradaMessage").textContent = ''; // Limpa a mensagem
+            }
+        });
+    </script>
+</body>
+</html>
